@@ -1,11 +1,42 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import "../Signup/Signup.scss"
-import {Link} from "react-router-dom"
+import {Link,Redirect} from "react-router-dom"
 import {AuthContext} from "../../AuthContext"
 
 function Signup() {
   const {autType,setAuthType}=useContext(AuthContext);
+  const [firstname,setFirstname]=useState("");
+  const [lastname,setLastname]=useState("")
+  const [email,setEmail]=useState("");
+  const [password,setPassword]=useState("");
+  const [redirectToLogIn,setRedirectToLogin]=useState(false)
   
+  const onSignup=(e)=>{
+    e.preventDefault();
+    fetch("http://localhost:3001/user/signup",{
+      method:"POST",
+      credentials:"include",
+      withCredentials:true,
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        firstname:firstname,
+        lastname:lastname,
+        email:email,
+        password:password
+      })
+    }).then((res)=>res.json()).then((data)=>{
+      console.log(data);
+      
+    }).catch((err)=>console.log(err))
+
+  }
+  if(redirectToLogIn)
+  return(
+    <Redirect to="/user/login"/>
+  )
+  else
   return (
     <div className="modal-overlay">
             <div className="signup-div">
@@ -14,11 +45,11 @@ function Signup() {
               }}><i className="fas fa-times"></i></div>
                 <form className="signup-form">
                     
-                    <div><input  type="text" name="firstname" placeholder="firstname" /><input  type="text" name="lastname" placeholder="lastname" /></div>                   
+                    <div><input onChange={(e)=>setFirstname(e.target.value)}  value={firstname} type="text" name="firstname" placeholder="firstname" /><input value={lastname} onChange={(e)=>setLastname(e.target.value)}  type="text" name="lastname" placeholder="lastname" /></div>                   
 
-                    <input className="text-input" type="text" name="username" placeholder="email" />
-                    <input className="text-input" type="password" name="password" placeholder="password"/>
-                    <button type="submit" className="signup-button">Start Now</button>
+                    <input onChange={(e)=>setEmail(e.target.value)} value={email} className="text-input" type="text" name="username" placeholder="email" />
+                    <input onChange={(e)=>setPassword(e.target.value)} value={password} className="text-input" type="password" name="password" placeholder="password"/>
+                    <button onClick={onSignup} type="submit" className="signup-button">Start Now</button>
                     
                 </form>
                 <h5>Already have an account? <span><Link onClick={()=>{

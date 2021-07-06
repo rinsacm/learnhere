@@ -1,6 +1,6 @@
 
 # npm
-/node_modules
+node_modules
 package-lock.json
 *.log
 *.gz
@@ -23,3 +23,7 @@ package.json.bak
 .vscode
 .env
 
+
+
+#react
+build
