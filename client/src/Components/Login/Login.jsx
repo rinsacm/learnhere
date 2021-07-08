@@ -1,26 +1,60 @@
-import React,{useContext} from 'react'
+import React,{useContext,useState} from 'react'
 import "../Login/Login.scss"
 import {Link} from "react-router-dom"
 import {AuthContext} from "../../AuthContext"
 
 function Login() {
     const {autType,setAuthType}=useContext(AuthContext);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const onLogin = (e) => {
+        e.preventDefault();
+        fetch("http://localhost:3001/user/login", {
+          method: "POST",
+          credentials: "include",
+          withcredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        })
+          .then(async(res) => {
+              console.log(res)
+              if(res.status==200)
+      setAuthType(null)
+              return res.json()
+            // localStorage.setItem("token", `Bearer ${data.token}`);
+            // localStorage.setItem("user_id", data.user.email);})
+            
+            
+          }).then((data)=>{
+              console.log(data)
+          })
+          .catch((err) => console.log(err));
+      };
+
     return (
         <div className="modal-overlay">
-            <div class="login-div">
-            <div class="close-button" onClick={()=>{
+            <div className="login-div">
+            <div className="close-button" onClick={()=>{
                 setAuthType(null)
-              }}><i class="fas fa-times"></i></div>
-                <form class="login-form">
-                    <input className="text-input" type="text" name="username" placeholder="username" />
-                    <input className="text-input" type="password" name="password" placeholder="password"/>
+              }}><i className="fas fa-times"></i></div>
+                <form  className="login-form">
+                    <input value={email}
+            onChange={(e) => setEmail(e.target.value)} className="text-input" type="text" name="username" placeholder="username" />
+                    <input value={password}
+            onChange={(e) => setPassword(e.target.value)}  className="text-input" type="password" name="password" placeholder="password"/>
                     <Link className="forgot-password-link">forgot password?</Link>
-                    <button type="submit" className="login-button">Login <i class="fas fa-sign-in-alt"></i></button>
+                    <button onClick={(e) => onLogin(e)} type="submit" className="login-button">Login <i class="fas fa-sign-in-alt"></i></button>
                     
                 </form>
                 <h5>Don't have an account? <span><Link onClick={()=>{
                 setAuthType("signup")
-              }}>Signup</Link></span></h5>
+              }}>Signup</Link ></span></h5>
 
             </div>
         </div>

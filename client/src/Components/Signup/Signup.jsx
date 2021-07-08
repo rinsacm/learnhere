@@ -9,7 +9,6 @@ function Signup() {
   const [lastname,setLastname]=useState("")
   const [email,setEmail]=useState("");
   const [password,setPassword]=useState("");
-  const [redirectToLogIn,setRedirectToLogin]=useState(false)
   
   const onSignup=(e)=>{
     e.preventDefault();
@@ -26,17 +25,20 @@ function Signup() {
         email:email,
         password:password
       })
-    }).then((res)=>res.json()).then((data)=>{
-      console.log(data);
+    }).then((res)=>{
+      let status=res.status;
       
+      if(res.status==201)
+      setAuthType("login")
+      
+      console.log(res)
+     return res.json()
+    }).then((data)=>{
+      console.log(data)
     }).catch((err)=>console.log(err))
 
   }
-  if(redirectToLogIn)
-  return(
-    <Redirect to="/user/login"/>
-  )
-  else
+ 
   return (
     <div className="modal-overlay">
             <div className="signup-div">
