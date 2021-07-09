@@ -22,10 +22,10 @@ function Login() {
             password: password,
           }),
         })
-          .then(async(res) => {
+          .then((res) => {
               console.log(res)
               if(res.status==200)
-      setAuthType(null)
+                setAuthType(null)
               return res.json()
             // localStorage.setItem("token", `Bearer ${data.token}`);
             // localStorage.setItem("user_id", data.user.email);})
@@ -49,7 +49,7 @@ function Login() {
                     <input value={password}
             onChange={(e) => setPassword(e.target.value)}  className="text-input" type="password" name="password" placeholder="password"/>
                     <Link className="forgot-password-link">forgot password?</Link>
-                    <button onClick={(e) => onLogin(e)} type="submit" className="login-button">Login <i class="fas fa-sign-in-alt"></i></button>
+                    <button onClick={(e) => onLogin(e)} type="submit" className="login-button">Login <i className="fas fa-sign-in-alt"></i></button>
                     
                 </form>
                 <h5>Don't have an account? <span><Link onClick={()=>{
