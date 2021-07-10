@@ -16,7 +16,7 @@ router.post("/signup",(req,res,next)=>{
     dbconfig.get().collection('users').findOne({email:newUser.email},(err,user)=>{
         if(user)
         res.status(500).json({
-            
+            success:false,
             message:"User Exists"
         })
         else
@@ -25,11 +25,13 @@ router.post("/signup",(req,res,next)=>{
     if(err)
     res.status(500).json({
         error:err.toString(),
+        success:false,
         message:"Error!!"
     })
     else{
         console.log(user.ops[0]._id)
     res.status(201).json({
+        success:true,
         user:user.ops[0]._id,
         message:"New user created"
     })
@@ -50,12 +52,14 @@ router.post("/login",(req,res,next)=>{
                 let token=jwt.sign(email,process.env.TOKEN_SECRET);
                 console.log(user._id)
                 res.status(200).json({
+                    success:true,
                     user:user._id,
                     message:"Logged in"
                 })
             }
             else{
                 res.status(500).json({
+                    success:false,
                     message:"Incorrect password"
                 })
             }
@@ -63,6 +67,7 @@ router.post("/login",(req,res,next)=>{
         else{
             console.log(err)
             res.status(404).json({
+                success:false,
                 message:"Incorrect email"
             })
         }

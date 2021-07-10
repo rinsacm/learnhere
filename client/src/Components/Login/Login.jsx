@@ -7,6 +7,7 @@ function Login() {
     const {autType,setAuthType}=useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [err,setErr]=useState(null)
 
     const onLogin = (e) => {
         e.preventDefault();
@@ -33,6 +34,8 @@ function Login() {
             
           }).then((data)=>{
               console.log(data)
+              if(data.success==false)
+              setErr(data.message)
           })
           .catch((err) => console.log(err));
       };
@@ -43,6 +46,8 @@ function Login() {
             <div className="close-button" onClick={()=>{
                 setAuthType(null)
               }}><i className="fas fa-times"></i></div>
+              {err&& <span class="err-msg">{err}</span>
+              }
                 <form  className="login-form">
                     <input value={email}
             onChange={(e) => setEmail(e.target.value)} className="text-input" type="text" name="username" placeholder="username" />

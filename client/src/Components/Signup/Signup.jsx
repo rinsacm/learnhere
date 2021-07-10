@@ -9,6 +9,7 @@ function Signup() {
   const [lastname,setLastname]=useState("")
   const [email,setEmail]=useState("");
   const [password,setPassword]=useState("");
+  const [err,setErr]=useState(null)
   
   const onSignup=(e)=>{
     e.preventDefault();
@@ -35,6 +36,8 @@ function Signup() {
      return res.json()
     }).then((data)=>{
       console.log(data)
+      if(data.success==false)
+              setErr(data.message)
     }).catch((err)=>console.log(err))
 
   }
@@ -45,6 +48,8 @@ function Signup() {
               <div className="close-button" onClick={()=>{
                 setAuthType(null)
               }}><i className="fas fa-times"></i></div>
+              {err&& <span class="err-msg">{err}</span>
+              }
                 <form className="signup-form">
                     
                     <div><input onChange={(e)=>setFirstname(e.target.value)}  value={firstname} type="text" name="firstname" placeholder="firstname" /><input value={lastname} onChange={(e)=>setLastname(e.target.value)}  type="text" name="lastname" placeholder="lastname" /></div>                   
