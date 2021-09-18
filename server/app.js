@@ -1,14 +1,12 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const morgan=require('morgan');
-
+const morgan = require("morgan");
 
 const indexRouter = require("./index");
-const userRouter=require("./routes/user")
+const userRouter = require("./routes/user");
 
 let dbconnect = require("./config/dbconfig");
-
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -33,11 +31,8 @@ app.use(cors(corsOptions));
 app.use(morgan("dev"));
 require("dotenv").config();
 
-
-
-
 app.use("/", indexRouter);
-app.use("/user",userRouter)
+app.use("/user", userRouter);
 
 app.listen(process.env.PORT, () => {
   console.log("listening at port ", process.env.PORT);
@@ -45,7 +40,7 @@ app.listen(process.env.PORT, () => {
 
 dbconnect.connect((err) => {
   if (err) {
-    console.log(err)
+    console.log(err);
     console.log("Unable to connect to database");
     process.exit(1);
   }

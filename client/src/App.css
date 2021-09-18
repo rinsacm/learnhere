@@ -1,5 +1,8 @@
-body{
-  font-family: 'Proxima Nova';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+body {
+  font-family: "Proxima Nova";
 }
 .App {
   position: absolute;
