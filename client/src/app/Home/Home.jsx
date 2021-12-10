@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
-import Login from "../Login/Login";
-import Signup from "../Signup/Signup";
-import "../Home/Home.scss";
-import { AuthContext } from "../../AuthContext";
+import Login from "../student/Login/Login";
+import Signup from "../student/Signup/Signup";
+import "./Home.scss";
+import { AuthContext } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
 
 function Home() {
   const { authType, setAuthType } = useContext(AuthContext);
   return (
-    <div className="flex-row justify-center  w-full h-full relative">
+    <div className="flex-row justify-center  w-full h-full min-h-screen ">
       {(authType === "login" && <Login />) ||
         (authType === "signup" && <Signup />)}
 
@@ -24,7 +24,7 @@ function Home() {
           className="w-3/6 rounded-xl bg-white h-full p-6 justify-center  "
         >
           <div
-            style={{ backgroundColor: "#101e49" }}
+            style={{ backgroundColor: "#294F9C" }}
             className="w-28  relative -top-10 py-1 text-white rounded-3xl justify-center items-center flex mx-auto"
           >
             Teachers
@@ -46,7 +46,7 @@ function Home() {
             only five centuries,
           </div>
           <div className="flex justify-center items-center w-full">
-            <Link to="/teachers/login">
+            <Link to="/teacher/login">
               <button
                 style={{ backgroundColor: "#4e9afc", width: 120 }}
                 className="rounded-sm py-2 font-medium text-white"
@@ -61,7 +61,7 @@ function Home() {
           className="w-3/6 rounded-xl bg-white h-full p-6 justify-center  "
         >
           <div
-            style={{ backgroundColor: "#101e49" }}
+            style={{ backgroundColor: "#294F9C" }}
             className="w-28  relative -top-10 py-1 text-white rounded-3xl justify-center items-center flex mx-auto"
           >
             Students
@@ -83,7 +83,7 @@ function Home() {
             only five centuries,
           </div>
           <div className="flex justify-center items-center w-full">
-            <Link to="/users/login">
+            <Link to="/student/login">
               <button
                 style={{ backgroundColor: "#4e9afc", width: 120 }}
                 className="rounded-sm py-2 font-medium text-white"

@@ -3,8 +3,9 @@ const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
 
-const indexRouter = require("./index");
+const indexRouter = require("./routes/index");
 const userRouter = require("./routes/user");
+const teacherRouter = require("./routes/teacher");
 
 let dbconnect = require("./config/dbconfig");
 
@@ -33,6 +34,7 @@ require("dotenv").config();
 
 app.use("/", indexRouter);
 app.use("/user", userRouter);
+app.use("/teacher", teacherRouter);
 
 app.listen(process.env.PORT, () => {
   console.log("listening at port ", process.env.PORT);

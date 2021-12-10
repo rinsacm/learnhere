@@ -1,18 +1,19 @@
-import "./App.css";
-import React, { useState } from "react";
+import "./App.less";
+import React, { useEffect, useState } from "react";
 import "./tailwind.output.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from "./Components/Home/Home";
-import Navbar from "./Components/Navbar/Navbar";
-import { AuthContext } from "./AuthContext";
-import TeacherLogin from "./Components/TeacherLogin/TeacherLogin";
-import TeacherSignup from "./Components/Teacher/TeacherSignup/TeacherSignup";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar";
+import { AuthContext } from "./contexts/AuthContext";
+import Routes from "./Routes";
+import { AuthRoleContext } from "./contexts/AuthRoleContext";
 
 function App() {
   const [authType, setAuthType] = useState(null);
+  const [role, setRole] = useState(null);
+  useEffect(() => {});
   return (
     <div
-      className="w-full min-h-screen m-0 pb-10"
+      className="w-full h-full min-h-screen relative font-encodasans"
       style={{ backgroundColor: "#f7f8fa" }}
     >
       <Router>
@@ -22,12 +23,18 @@ function App() {
             setAuthType,
           }}
         >
-          <Switch>
-            <Navbar />
-          </Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/teachers/login" component={TeacherLogin} />
-          <Route exact path="/teachers/signup" component={TeacherSignup} />
+          <AuthRoleContext.Provider
+            value={{
+              role,
+              setRole,
+            }}
+          >
+            <Switch>
+              <Navbar />
+            </Switch>
+
+            <Routes />
+          </AuthRoleContext.Provider>
         </AuthContext.Provider>
       </Router>
     </div>

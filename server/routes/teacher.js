@@ -2,31 +2,32 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const dbconfig = require("../config/dbconfig");
 const jwt = require("jsonwebtoken");
-const { ObjectId } = require("bson");
 const router = express.Router();
 
 router.post("/signup", (req, res, next) => {
   console.log(req.body);
   let hashedPassword = bcrypt.hashSync(req.body.password, 10);
   let newUser = {
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
+    name: req.body.name,
     email: req.body.email,
+    job: req.body.job,
+    company: req.body.company,
+    skills: req.body.skills,
     password: hashedPassword,
   };
   dbconfig
     .get()
-    .collection("students")
+    .collection("teachers")
     .findOne({ email: newUser.email }, (err, user) => {
       if (user)
         res.status(500).json({
           success: false,
-          message: "Student  Exists",
+          message: "User Exists",
         });
       else
         dbconfig
           .get()
-          .collection("students")
+          .collection("teachers")
           .insertOne(newUser, (err, user) => {
             if (err)
               res.status(500).json({
@@ -39,7 +40,7 @@ router.post("/signup", (req, res, next) => {
               res.status(201).json({
                 success: true,
                 user: user.ops[0]._id,
-                message: "New student user created",
+                message: "New user created",
               });
             }
           });
@@ -50,7 +51,7 @@ router.post("/login", (req, res, next) => {
   console.log(req.body);
   dbconfig
     .get()
-    .collection("students")
+    .collection("teachers")
     .findOne({ email: email }, (err, user) => {
       if (user) {
         console.log(user);
@@ -73,6 +74,50 @@ router.post("/login", (req, res, next) => {
         res.status(404).json({
           success: false,
           message: "Incorrect email",
+        });
+      }
+    });
+});
+router.post("/create-new-course", (req, res) => {
+  console.log(req.body);
+  let course = req.body;
+  dbconfig
+    .get()
+    .collection("courses")
+    .insertOne(course, (err, data) => {
+      if (err)
+        res.status(500).json({
+          error: err.toString(),
+          success: false,
+          message: "Error!!",
+        });
+      else {
+        res.status(201).json({
+          success: true,
+
+          message: "Course created",
+        });
+      }
+    });
+});
+router.get("/courses", (req, res) => {
+  dbconfig
+    .get()
+    .collection("courses")
+    .find()
+    .toArray((err, data) => {
+      console.log(data);
+      if (err)
+        res.status(500).json({
+          error: err.toString(),
+          success: false,
+          message: "Error!!",
+        });
+      else {
+        res.status(200).json({
+          success: true,
+          courses: data,
+          message: "success",
         });
       }
     });

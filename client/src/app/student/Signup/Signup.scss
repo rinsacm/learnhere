@@ -1,0 +1,79 @@
+.modal-overlay {
+  /* visibility: hidden; */
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+}
+.signup-div {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  height: max-content;
+  justify-content: center;
+  background-color: white;
+  position: relative;
+  h5 {
+    font-weight: 400;
+    color: #46535e;
+    font-size: 14px;
+    text-align: center;
+    span {
+      a {
+        text-decoration: none;
+        color: #4c9cdf;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.signup-form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  div {
+    display: flex;
+
+    justify-content: center;
+
+    input {
+      width: 50%;
+
+      border-radius: 2px;
+      padding: 5px;
+      border: 1px solid #bbb;
+    }
+  }
+  .text-input {
+    // width: 100%;
+
+    border-radius: 2px;
+    padding: 5px;
+    margin: 10px;
+    border: 1px solid #bbb;
+  }
+}
+.signup-button {
+  width: 60%;
+  background-color: #4c9cdf;
+  padding: 10px;
+  border-radius: 2px;
+  color: white;
+  border: none;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+.close-button {
+  text-align: right;
+  width: 100%;
+}
