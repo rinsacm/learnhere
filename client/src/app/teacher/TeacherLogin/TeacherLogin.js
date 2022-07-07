@@ -36,6 +36,8 @@ function TeacherLogin() {
         else {
           setErr("");
           setRole("teacher");
+          localStorage.setItem("id", data.user);
+          localStorage.setItem("token", `Bearer ${data.token}`);
           history.push(`/teacher/${data.user}`);
         }
       })

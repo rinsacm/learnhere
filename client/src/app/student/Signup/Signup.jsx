@@ -92,13 +92,7 @@ function Signup() {
           <h5 className="text-center">
             Already have an account?{" "}
             <span>
-              <Link
-                onClick={() => {
-                  setAuthType("login");
-                }}
-              >
-                Login
-              </Link>
+              <Link to="/student/login">Login</Link>
             </span>
           </h5>
         </div>

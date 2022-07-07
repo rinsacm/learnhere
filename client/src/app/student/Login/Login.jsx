@@ -28,14 +28,17 @@ function Login() {
     })
       .then((res) => {
         console.log(res);
-        if (res.status === 200) return res.json();
-        // localStorage.setItem("token", `Bearer ${data.token}`);
-        // localStorage.setItem("user_id", data.user.email);})
+        if (res.status === 200) {
+          // localStorage.setItem("user_id", data.user.email);
+          return res.json();
+        }
       })
       .then((data) => {
         console.log(data);
         setRole("student");
         localStorage.setItem("id", data.user);
+        localStorage.setItem("token", `Bearer ${data.token}`);
+
         if (data.success === false) setErr(data.message);
         else history.push("/");
       })
@@ -76,13 +79,7 @@ function Login() {
           <h5 className="text-center">
             Don't have an account?{" "}
             <span>
-              <Link
-                onClick={() => {
-                  setAuthType("signup");
-                }}
-              >
-                Signup
-              </Link>
+              <Link to="/student/signup">Signup</Link>
             </span>
           </h5>
         </div>

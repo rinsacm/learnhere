@@ -9,6 +9,12 @@ import { AuthRoleContext } from "../../contexts/AuthRoleContext";
 import { getUserRole } from "../../utils/utils";
 
 function Navbar() {
+  const onLogout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("id");
+    localStorage.removeItem("token");
+    setRole(null);
+  };
   const menu = (
     <Menu>
       <Menu.Item key="0">
@@ -26,7 +32,9 @@ function Navbar() {
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="5">
-        <div className="text-lg font-normal">Logout </div>
+        <div className="text-lg font-normal" onClick={onLogout}>
+          Logout{" "}
+        </div>
       </Menu.Item>
     </Menu>
   );
@@ -41,8 +49,8 @@ function Navbar() {
     }
   }, []);
   return (
-    <Switch>
-      <div className="navbar-div flex justify-end">
+    <div className="navbar-div flex justify-end">
+      <Switch>
         {role ? (
           <>
             <Dropdown overlay={menu} trigger={["click"]}>
@@ -57,6 +65,12 @@ function Navbar() {
           </>
         ) : (
           <div className="auth-buttons gap-2 ">
+            <Link to="/">
+              <div className="hover:opacity-95 text-white px-8 py-4 text-xl font-medium ">
+                Home
+              </div>
+            </Link>
+
             <Link to="/student/login">
               <div className="hover:opacity-95 text-white px-8 py-4 text-xl font-medium ">
                 Login
@@ -74,8 +88,8 @@ function Navbar() {
             </Link>
           </div>
         )}
-      </div>
-    </Switch>
+      </Switch>
+    </div>
   );
 }
 

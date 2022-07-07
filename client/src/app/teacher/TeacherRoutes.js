@@ -1,5 +1,6 @@
 import { Route, Switch } from "react-router";
 import Course from "./CoursePage/CoursePage";
+import ModulePage from "./ModulePage/ModulePage";
 import TeacherCourses from "./TeacherCourses/TeacherCourses";
 import TeacherLogin from "./TeacherLogin/TeacherLogin";
 import TeacherSignup from "./TeacherSignup/TeacherSignup";
@@ -16,8 +17,11 @@ const TeacherRoutes = () => {
       <Route exact path="/teacher/my-courses">
         <TeacherCourses />
       </Route>
-      <Route exact path="/teacher/:courseid">
+      <Route exact path="/teacher/courses/:courseid">
         <Course />
+      </Route>
+      <Route exact path="/teacher/courses/:courseid/:module">
+        <ModulePage />
       </Route>
     </Switch>
   );

@@ -84,7 +84,7 @@ function TeacherCourses() {
         <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
           {myCourses.map((course, index) => {
             return (
-              <Link to={`/teacher/${course._id}`}>
+              <Link to={`/teacher/courses/${course._id}`}>
                 <CourseCard
                   key={index}
                   name={course.course}
