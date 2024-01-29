@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthRoleContext } from "../../../contexts/AuthRoleContext";
 
 function TeacherLogin() {
@@ -8,7 +8,7 @@ function TeacherLogin() {
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
   const { role, setRole } = useContext(AuthRoleContext);
-  let history = useHistory();
+  let history = useNavigate();
   const onLogin = (e) => {
     e.preventDefault();
     fetch("http://localhost:3001/teacher/login", {
@@ -36,6 +36,7 @@ function TeacherLogin() {
         else {
           setErr("");
           setRole("teacher");
+          localStorage.setItem("name", data.name);
           localStorage.setItem("id", data.user);
           localStorage.setItem("token", `Bearer ${data.token}`);
           history.push(`/teacher/${data.user}`);

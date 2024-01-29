@@ -1,17 +1,20 @@
-const { Switch, Route } = require("react-router");
+import CoursePage from "../teacher/CoursePage/CoursePage";
+import ModulePage from "./ModulePage";
+import StudentCourses from "./StudentCourses";
+
+const { Route, Routes } = require("react-router");
 const { default: Login } = require("./Login/Login");
 const { default: Signup } = require("./Signup/Signup");
 
 const StudentRoutes = () => {
   return (
-    <Switch>
-      <Route exact path="/student/login">
-        <Login />
-      </Route>
-      <Route exact path="/student/signup">
-        <Signup />
-      </Route>
-    </Switch>
+    <Routes>
+      <Route path="/my-courses" element={<StudentCourses />} />
+      <Route
+        path="courses/:courseid/:modules/:moduleid"
+        element={<ModulePage />}
+      />
+    </Routes>
   );
 };
 export default StudentRoutes;

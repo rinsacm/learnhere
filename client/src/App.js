@@ -1,42 +1,29 @@
-import "./App.less";
+import "./App.css";
 import React, { useEffect, useState } from "react";
 import "./tailwind.output.css";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
-import Navbar from "./components/Navbar/Navbar";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Navbar from "./Components/Navbar/Navbar.jsx";
 import { AuthContext } from "./contexts/AuthContext";
-import Routes from "./Routes";
 import { AuthRoleContext } from "./contexts/AuthRoleContext";
+import AllRoutes from "./AllRoutes";
+import { AuthProvider } from "./app/context/AuthProvider";
+import useAuth from "./app/hook/useAuth";
 
 function App() {
-  const [authType, setAuthType] = useState(null);
-  const [role, setRole] = useState(null);
-  useEffect(() => {});
+  const [role, setRole] = useState("");
+
   return (
     <div
       className="w-full h-full min-h-screen relative font-encodasans"
       style={{ backgroundColor: "#f7f8fa" }}
     >
-      <Router>
-        <AuthContext.Provider
-          value={{
-            authType,
-            setAuthType,
-          }}
-        >
-          <AuthRoleContext.Provider
-            value={{
-              role,
-              setRole,
-            }}
-          >
-            <Switch>
-              <Navbar />
-            </Switch>
+      <BrowserRouter>
+        <AuthProvider>
+          <Navbar />
 
-            <Routes />
-          </AuthRoleContext.Provider>
-        </AuthContext.Provider>
-      </Router>
+          <AllRoutes />
+        </AuthProvider>
+      </BrowserRouter>
     </div>
   );
 }

@@ -6,7 +6,8 @@ import { Button, Input, Spin, Form, Modal, Card } from "antd";
 import { Link } from "react-router-dom";
 
 function CoursePage(props) {
-  let { courseid } = useParams();
+  let { id } = useParams();
+  let courseid = id;
   const [course, setCourse] = useState({});
   const [newModuleModalVisible, setNewModuleModalVisible] = useState(false);
   const [newModuleName, setNewModuleName] = useState(null);
@@ -27,6 +28,7 @@ function CoursePage(props) {
       .then((data) => {
         console.log(data.data);
         if (data.success === false) setErr(data.message);
+        if (!data.data.modules) data.data.modules = [];
         setCourse(data.data);
 
         console.log(data.data);
@@ -91,21 +93,23 @@ function CoursePage(props) {
           </Button>
         </div>
         <div>
-          {course.modules.map((data, index) => {
-            return (
-              <Link
-                to={`/teacher/courses/${course._id}/module-${data.moduleName}`}
-                key={index}
-              >
-                <Card style={{ width: "100%" }} className="m-2">
-                  <p>{data.moduleName}</p>
-                </Card>
-              </Link>
-            );
-          })}
+          {course.modules != null
+            ? course.modules.map((data, index) => {
+                return (
+                  <Link
+                    to={`/teacher/courses/${course._id}/module-${data.moduleName}`}
+                    key={index}
+                  >
+                    <Card style={{ width: "100%" }} className="m-2">
+                      <p>{data.moduleName}</p>
+                    </Card>
+                  </Link>
+                );
+              })
+            : null}
         </div>
         <Modal
-          visible={newModuleModalVisible}
+          open={newModuleModalVisible}
           okText="Save"
           closable={true}
           onCancel={() => setNewModuleModalVisible(false)}

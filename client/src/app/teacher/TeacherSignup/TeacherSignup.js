@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function TeacherSignup() {
   const [name, setName] = useState("");
@@ -12,7 +12,7 @@ function TeacherSignup() {
   const [confirmPass, setConfirmPass] = useState("");
   const [err, setErr] = useState("");
 
-  let history = useHistory();
+  let history = useNavigate();
 
   const onSignup = (e) => {
     e.preventDefault();
@@ -43,6 +43,8 @@ function TeacherSignup() {
       })
       .then((data) => {
         console.log(data);
+        localStorage.setItem("name", data.name);
+
         if (data.success === false) setErr(data.message);
       })
       .catch((err) => console.log(err));

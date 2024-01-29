@@ -1,6 +1,6 @@
 import { Button, Modal, Form, Input, Spin } from "antd";
 import React, { useEffect, useState } from "react";
-import CourseCard from "../../../components/CourseCard/CourseCard";
+import CourseCard from "../../../Components/CourseCard/CourseCard";
 import { PlusOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
@@ -11,8 +11,9 @@ function TeacherCourses() {
   const [err, setErr] = useState("");
   const [myCourses, setMyCourses] = useState(null);
   const [loading, setLoading] = useState(true);
+  let teacherid = localStorage.getItem("id");
   useEffect(() => {
-    fetch("http://localhost:3001/teacher/courses", {
+    fetch(`http://localhost:3001/teacher/${teacherid}/courses`, {
       method: "GET",
       credentials: "include",
       withcredentials: true,
@@ -43,6 +44,11 @@ function TeacherCourses() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        instructor: {
+          id: localStorage.getItem("id"),
+          name: localStorage.getItem("name"),
+        },
+
         course: newCouseName,
         description: newCourseDescription,
       }),
@@ -82,20 +88,24 @@ function TeacherCourses() {
           </div>
         </Button>
         <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
-          {myCourses.map((course, index) => {
-            return (
-              <Link to={`/teacher/courses/${course._id}`}>
-                <CourseCard
-                  key={index}
-                  name={course.course}
-                  description={course.description}
-                />
-              </Link>
-            );
-          })}
+          {myCourses.length > 0 ? (
+            myCourses.map((course, index) => {
+              return (
+                <Link to={`/teacher/courses/${course._id}`}>
+                  <CourseCard
+                    key={index}
+                    name={course.course}
+                    description={course.description}
+                  />
+                </Link>
+              );
+            })
+          ) : (
+            <div>No courses to show</div>
+          )}
         </div>
         <Modal
-          visible={newCourseModalVisible}
+          open={newCourseModalVisible}
           okText="Save"
           closable={true}
           onCancel={() => setNewcourseModalVisible(false)}

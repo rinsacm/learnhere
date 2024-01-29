@@ -13,7 +13,7 @@ function ModulePage(props) {
   let courseid = params.courseid;
   const [course, setCourse] = useState({});
   // let moduleIndex = parseInt(params.module.replace("module-", "")) - 1;
-  let mName = params.module.replace("module-", "");
+  let mName = params.moduleid.replace("module-", "");
   const [newModuleName, setNewModuleName] = useState(null);
 
   const [err, setErr] = useState("");
@@ -161,7 +161,10 @@ function ModulePage(props) {
             Your browser does not support the video tag.
           </video> */}
           <ReactPlayer
-            url={`http://localhost:3001/teacher/courses/6155fca1fa101710c49aceea/module-${mName}/video/${module.video}`}
+            playing={true}
+            controls={true}
+            muted={false}
+            url={`http://localhost:3001/teacher/courses/${course._id}/module-${mName}/video/${module.video}`}
           />
           <div className="my-2 ">
             <form
@@ -176,7 +179,9 @@ function ModulePage(props) {
                 onChange={onChange}
                 className="my-2"
               />
-              <Button icon={<UploadOutlined />}>Upload</Button>
+              <Button onClick={onUpload} icon={<UploadOutlined />}>
+                Upload
+              </Button>
             </form>
           </div>
         </div>
