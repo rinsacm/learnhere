@@ -50,4 +50,8 @@ router.get("/get-role/:id", (req, res, next) => {
       }
     });
 });
+router.get("/test", (req, res, next) => {
+  console.log("running");
+  res.end("running....");
+});
 module.exports = router;

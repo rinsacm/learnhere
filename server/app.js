@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const indexRouter = require("./routes/index");
 const userRouter = require("./routes/user");
 const teacherRouter = require("./routes/teacher");
+const studentRouter = require("./routes/student");
 
 let dbconnect = require("./config/dbconfig");
 
@@ -35,6 +36,7 @@ require("dotenv").config();
 app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use("/teacher", teacherRouter);
+app.use("/student", studentRouter);
 
 app.listen(process.env.PORT, () => {
   console.log("listening at port ", process.env.PORT);

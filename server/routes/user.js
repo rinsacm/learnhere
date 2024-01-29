@@ -60,6 +60,7 @@ router.post("/login", (req, res, next) => {
           res.status(200).json({
             success: true,
             user: user._id,
+            name: user.firstname + " " + user.lastname,
             message: "Logged in",
           });
         } else {

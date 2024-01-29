@@ -69,6 +69,7 @@ router.post("/login", (req, res, next) => {
             user: user._id,
             message: "Logged in",
             token: token,
+            name: user.name,
           });
         } else {
           res.status(500).json({
@@ -107,7 +108,33 @@ router.post("/create-new-course", (req, res) => {
       }
     });
 });
+router.get("/:teacherid/courses", (req, res) => {
+  let teacherid = req.params.teacherid.toString();
+  console.log(teacherid);
+  dbconfig
+    .get()
+    .collection("courses")
+    .find()
+    .toArray((err, data) => {
+      console.log(data);
+      data = data.filter((d) => d.instructor.id === teacherid);
+      if (err)
+        res.status(500).json({
+          error: err.toString(),
+          success: false,
+          message: "Error!!",
+        });
+      else {
+        res.status(200).json({
+          success: true,
+          courses: data,
+          message: "success",
+        });
+      }
+    });
+});
 router.get("/courses", (req, res) => {
+  let teacherid = req.params.teacherid;
   dbconfig
     .get()
     .collection("courses")
